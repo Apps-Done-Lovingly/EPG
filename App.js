@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Share, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Share, Image, ToastAndroid } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const generator = require('./src/Backend/Generator.js');
@@ -10,8 +10,8 @@ export default class MainScreen extends Component {
     super();
     this.state = {
       balanceText: "Enduring",
-      passwordLength: "12",
-      password: generator.memory(12)
+      passwordLength: "",
+      password: "Password output, tap to share!"
     }
   }
 
@@ -55,7 +55,7 @@ export default class MainScreen extends Component {
         <View style={styles.subContainer}>
           <TouchableOpacity
             style={[styles.saveButton, { borderRadius: wp(10), alignSelf: 'center' }]}
-            onPress={() => { /* Show ADL signature, AKA add later */ }}>
+            onPress={() => { ToastAndroid.show("Created by Apps Done Lovingly!", ToastAndroid.SHORT) }}>
             <Image
               resizeMode="contain"
               source={require('./src/assets/logo.png')}
@@ -71,14 +71,14 @@ export default class MainScreen extends Component {
             <Text
               allowFontScaling
               numberOfLines={2}
-              style={styles.text}>{this.state.balanceText + " password"}</Text>
+              style={styles.text}>{"Mode: " + this.state.balanceText + " password"}</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.subContainer}>
           <TextInput
-            defaultValue="12"
-            placeholder="length"
+            defaultValue=""
+            placeholder="Password's length.."
             numberOfLines={1}
             textAlign="center"
             onChangeText={value => this.changePasswordLengthHandler(value)}
